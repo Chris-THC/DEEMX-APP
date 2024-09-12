@@ -1,14 +1,8 @@
-import { Button } from "@/components/ui/button";
+import HomeScreen from "./home/HomeScreen";
+
 
 const Home = () => {
-  return (
-    <div>
-      <h2>Home</h2>
-      <div>
-        <Button>Click me</Button>
-      </div>
-    </div>
-  );
+  return <HomeScreen />;
 };
 
 export default Home;
