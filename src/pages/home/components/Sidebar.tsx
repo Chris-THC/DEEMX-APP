@@ -12,7 +12,7 @@ const SidebarApp = () => {
   ];
 
   return (
-    <aside className="w-64 bg-card p-4 hidden md:block">
+    <aside className="w-52 bg-card p-4 hidden md:block">
       <nav className="space-y-4">
         <Button variant="ghost" className="w-full justify-start">
           <Home className="mr-2 h-4 w-4" />

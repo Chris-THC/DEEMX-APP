@@ -24,7 +24,9 @@ export default function HomeScreen() {
       <div className="flex flex-1 overflow-hidden">
         <SidebarApp />
         <main className="flex-1 overflow-auto">
-          <Releases genre={musicgenres!} />
+          <div className="ml-8">
+            <Releases genre={musicgenres!} />
+          </div>
           <TopTracks />
           <TopAlbums />
           {/* <TopArtist artistInfo={data} /> */}

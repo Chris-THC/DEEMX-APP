@@ -20,7 +20,7 @@ const Releases: React.FC<DataRealse> = ({ genre }) => {
 
   return (
     <section className="pb-8 mx-4">
-      <h2 className="text-2xl font-semibold mb-4">Hey! escucha algo nuevo</h2>
+      <h2 className="text-2xl font-semibold mb-4">Escucha algo nuevo</h2>
 
       <Carousel
         plugins={[plugin.current]}
