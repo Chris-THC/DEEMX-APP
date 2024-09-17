@@ -1,49 +1,73 @@
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { TopArtists } from "@/interfaces/topArtists/TopArtist";
+import Autoplay from "embla-carousel-autoplay";
+import { PlayCircle } from "lucide-react";
 import React from "react";
 
-interface Artist {
-  id: string;
-  name: string;
-  link: string;
-  share: string;
-  picture: string;
-  picture_small: string;
-  picture_medium: string;
-  picture_big: string;
-  picture_xl: string;
-  nb_album: number;
-  nb_fan: number;
-  radio: boolean;
-  tracklist: string;
-  type: string;
+interface PropsCard {
+  artist: TopArtists;
 }
-interface TopArtists {
-  artistInfo: Artist;
+interface ArrayProp {
+  artistList: TopArtists[];
 }
 
-const TopArtist: React.FC<TopArtists> = ({ artistInfo }) => {
-  if (!artistInfo) {
-    return <p>No artist data available</p>; // Manejo de error si artistInfo es indefinido
-  }
+const CardArtist: React.FC<PropsCard> = ({ artist }) => {
+  return (
+    <Card className="w-[320px] bg-gradient-to-b from-blue-400 to-blue-600 text-white min-w-[240px] md:min-w-[250px] rounded-lg overflow-hidden shadow-lg mx-3">
+      <CardHeader className="relative h-44">
+        <img
+          src={artist.picture_xl}
+          alt={artist.name}
+          className="absolute inset-0 h-full w-full object-cover rounded-t-lg"
+        />
+      </CardHeader>
+      <CardContent className="pt-4 h-12">
+        <CardTitle className="text-lg font-bold text-center">{artist.name}</CardTitle>
+      </CardContent>
+      <CardFooter>
+        <Button className="w-full bg-white text-blue-600 hover:bg-blue-50">
+          <PlayCircle className="mr-2 h-4 w-4" /> Escuchar Ahora
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+};
+
+const TopArtist: React.FC<ArrayProp> = ({ artistList }) => {
+  const plugin = React.useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true })
+  );
 
   return (
-    <section>
+    <section className="pb-8 mx-4">
       <h2 className="text-2xl font-semibold mb-4">Top artistas</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-card rounded-lg overflow-hidden shadow-lg text-center">
-          {artistInfo.picture_big ? (
-            <img
-              src={artistInfo.picture_big}
-              alt={artistInfo.id}
-              className="w-full h-40 object-cover mx-auto mt-4"
-            />
-          ) : (
-            <p>No image available</p> // Mensaje alternativo si no hay imagen
-          )}
-          <div className="p-4">
-            <h3 className="font-semibold">{artistInfo.name}</h3>
-          </div>
-        </div>
-      </div>
+      <Carousel
+        plugins={[plugin.current]}
+        onMouseEnter={plugin.current.stop}
+        onMouseLeave={plugin.current.reset}
+        className="w-[96%]"
+      >
+        <CarouselContent className="pl-4">
+          {artistList.map((dataArtist, idx) => (
+            <CardArtist key={idx} artist={dataArtist} />
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
     </section>
   );
 };

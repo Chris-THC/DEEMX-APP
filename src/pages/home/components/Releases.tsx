@@ -1,4 +1,5 @@
-import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardFooter } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -7,6 +8,7 @@ import {
 } from "@/components/ui/carousel";
 import { Genre } from "@/interfaces/musicGenres/MusicGenre";
 import Autoplay from "embla-carousel-autoplay";
+import { PlayCircle } from "lucide-react";
 import React from "react";
 
 interface DataRealse {
@@ -32,16 +34,19 @@ const Releases: React.FC<DataRealse> = ({ genre }) => {
           {genre.map((dataGenre, index) => (
             <Card
               key={index}
-              className="bg-card min-w-[240px] md:min-w-[250px] rounded-lg overflow-hidden shadow-lg mb-4 mx-3"
+              className="bg-card min-w-[260px] md:min-w-[250px] rounded-lg overflow-hidden shadow-lg mb-4 mx-3 bg-gradient-to-b from-blue-400 to-blue-600"
             >
               <img
                 src={dataGenre.picture_big}
                 alt={dataGenre.id}
-                className="w-full h-40 object-cover"
+                className="w-full h-56 object-cover"
               />
-              <div className="p-4">
-                <h3 className="font-semibold text-center">{dataGenre.name}</h3>
-              </div>
+              <CardFooter>
+                <Button className="w-full bg-white text-blue-600 hover:bg-blue-50 mt-4">
+                  <PlayCircle className="mr-2 h-4 w-4" />
+                  {`Escuchar ${dataGenre.name}`}
+                </Button>
+              </CardFooter>
             </Card>
           ))}
         </CarouselContent>
