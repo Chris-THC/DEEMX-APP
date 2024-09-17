@@ -1,5 +1,6 @@
 import { useTopArtists } from "@/hooks/artist/UseTopArtist";
 import { UseMusicGenres } from "@/hooks/musicGenre/UseMusicGenres";
+import { UseTopTracks } from "@/hooks/topTracks/UseTopTracks";
 import PlaybackBar from "./components/PlaybackBar";
 import Releases from "./components/Releases";
 import SidebarApp from "./components/Sidebar";
@@ -8,9 +9,9 @@ import TopArtist from "./components/TopArtist";
 import TopTracks from "./components/TopTracks";
 
 export default function HomeScreen() {
-  // const { data } = useDeezerArtistTop();
   const { data: musicgenres, isLoading } = UseMusicGenres();
   const { data: topArtist } = useTopArtists();
+  const { data: topTracks } = UseTopTracks();
 
   if (isLoading) {
     return <div>Cargando...</div>;
@@ -30,9 +31,13 @@ export default function HomeScreen() {
           </div>
 
           <div className="ml-8">
-            <TopTracks />
+            {topTracks ? (
+              <TopTracks trackList={topTracks} />
+            ) : (
+              <div>Loading...</div>
+            )}
           </div>
-          
+
           <div className="ml-8">
             <Releases genre={musicgenres!} />
           </div>
