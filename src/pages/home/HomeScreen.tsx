@@ -1,5 +1,6 @@
 import { useTopArtists } from "@/hooks/artist/UseTopArtist";
 import { UseMusicGenres } from "@/hooks/musicGenre/UseMusicGenres";
+import { UseTopAlbums } from "@/hooks/topAlbums/UseTopAlbums";
 import { UseTopTracks } from "@/hooks/topTracks/UseTopTracks";
 import PlaybackBar from "./components/PlaybackBar";
 import Releases from "./components/Releases";
@@ -12,10 +13,13 @@ export default function HomeScreen() {
   const { data: musicgenres, isLoading } = UseMusicGenres();
   const { data: topArtist } = useTopArtists();
   const { data: topTracks } = UseTopTracks();
+  const { data: topAlbums } = UseTopAlbums();
 
   if (isLoading) {
     return <div>Cargando...</div>;
   }
+
+  console.info(topAlbums);
 
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
@@ -39,9 +43,16 @@ export default function HomeScreen() {
           </div>
 
           <div className="ml-8">
+            {topAlbums ? (
+              <TopAlbums topAlbums={topAlbums} />
+            ) : (
+              <div>Loading...</div>
+            )}
+          </div>
+
+          <div className="ml-8">
             <Releases genre={musicgenres!} />
           </div>
-          <TopAlbums />
         </main>
       </div>
 

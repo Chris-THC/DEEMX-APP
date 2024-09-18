@@ -34,15 +34,17 @@ const Releases: React.FC<DataRealse> = ({ genre }) => {
           {genre.map((dataGenre, index) => (
             <Card
               key={index}
-              className="bg-card min-w-[260px] md:min-w-[250px] rounded-lg overflow-hidden shadow-lg mb-4 mx-3 bg-gradient-to-b from-blue-400 to-blue-600"
+              className="bg-card min-w-[260px] md:min-w-[250px] rounded-lg overflow-hidden shadow-lg mb-4 mx-3 bg-gradient-to-b from-blue-400 to-blue-600 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
             >
-              <img
-                src={dataGenre.picture_big}
-                alt={dataGenre.id}
-                className="w-full h-56 object-cover"
-              />
+              <div className="relative overflow-hidden">
+                <img
+                  src={dataGenre.picture_big}
+                  alt={dataGenre.id}
+                  className="w-full h-56 object-cover transform transition-transform duration-500 hover:scale-110"
+                />
+              </div>
               <CardFooter>
-                <Button className="w-full bg-white text-blue-600 hover:bg-blue-50 mt-4">
+                <Button className="w-full bg-white text-blue-600 hover:bg-blue-50 mt-4 transition-colors duration-300">
                   <PlayCircle className="mr-2 h-4 w-4" />
                   {`Escuchar ${dataGenre.name}`}
                 </Button>
