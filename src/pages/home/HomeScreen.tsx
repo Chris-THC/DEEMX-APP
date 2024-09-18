@@ -1,5 +1,5 @@
 // pages/index.tsx (HomeScreen)
-import { useTopArtists } from "@/hooks/artist/UseTopArtist";
+import { useTopArtists } from "@/hooks/Topartist/UseTopArtist";
 import { UseMusicGenres } from "@/hooks/musicGenre/UseMusicGenres";
 import { UseTopAlbums } from "@/hooks/topAlbums/UseTopAlbums";
 import { UseTopTracks } from "@/hooks/topTracks/UseTopTracks";
