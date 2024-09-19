@@ -23,7 +23,7 @@ interface Artist {
   type: string;
 }
 
-interface Top10 {
+export interface Top10 {
   data: Daum[];
   total: number;
   next: string;
@@ -85,7 +85,7 @@ interface Album {
   type: string;
 }
 
-interface Albums {
+export interface Albums {
   data: Daum2[];
   total: number;
   next: string;
@@ -110,7 +110,7 @@ interface Daum2 {
   type: string;
 }
 
-interface Related {
+export interface Related {
   data: Daum3[];
   total: number;
 }

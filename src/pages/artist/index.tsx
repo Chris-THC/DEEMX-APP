@@ -1,15 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card } from "@/components/ui/card";
 import { useArtist } from "@/hooks/artist/Artist";
 import { storeArtistInfo } from "@/store/artist/ArtistStore";
-import {
-  HeartIcon,
-  MoreHorizontalIcon,
-  PlayIcon,
-  ShareIcon,
-} from "lucide-react";
+import { HeartIcon, PlayIcon, ShareIcon } from "lucide-react";
 import { useState } from "react";
+import SimilarArtistTop5 from "./components/SimilarArtistTop5";
+import Top10TracksByArtist from "./components/Top10";
+import AlbumsByArtist from "./components/AlbumsByArtist";
 
 export default function ArtistPage() {
   const [activeTab, setActiveTab] = useState("discography");
@@ -64,8 +61,6 @@ export default function ArtistPage() {
     },
   ];
 
-  console.info(artistInf?.playlist.data[1].title);
-
   if (isLoading) {
     return (
       <div className="flex justify-center align-middle h-full ">
@@ -75,7 +70,7 @@ export default function ArtistPage() {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-white text-gray-800 p-8">
+    <div className="flex flex-col items-center min-h-screen bg-white text-gray-800 m-4">
       <div className="w-full max-w-6xl">
         <div className="flex flex-col md:flex-row items-center md:items-end gap-8 mb-8">
           <img
@@ -111,92 +106,18 @@ export default function ArtistPage() {
           </div>
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-6 mb-8">
-            <TabsTrigger value="discography">Discography</TabsTrigger>
-            <TabsTrigger value="top-tracks">Top tracks</TabsTrigger>
-            <TabsTrigger value="similar-artists">Similar artists</TabsTrigger>
-            <TabsTrigger value="playlists">Playlists</TabsTrigger>
-            <TabsTrigger value="concerts">Concerts</TabsTrigger>
-            <TabsTrigger value="bio">Bio</TabsTrigger>
-          </TabsList>
-          <TabsContent value="discography">Discography content</TabsContent>
-          <TabsContent value="top-tracks">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-semibold">Top tracks</h2>
-              <Button variant="outline">View all</Button>
-            </div>
-            <ul className="space-y-4">
-              {topTracks.map((track, index) => (
-                <li
-                  key={index}
-                  className="flex items-center justify-between gap-4 bg-gray-50 p-2 rounded"
-                >
-                  <div className="flex items-center gap-4">
-                    <span className="text-gray-400 w-6 text-right">
-                      {index + 1}
-                    </span>
-                    <img
-                      src={track.cover}
-                      alt={track.title}
-                      className="w-10 h-10"
-                    />
-                    <span>{track.title}</span>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button size="icon" variant="ghost">
-                      <HeartIcon className="h-4 w-4" />
-                    </Button>
-                    <Button size="icon" variant="ghost">
-                      <MoreHorizontalIcon className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </TabsContent>
-          <TabsContent value="similar-artists">
-            Similar artists content
-          </TabsContent>
-          <TabsContent value="playlists">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-semibold">Playlists</h2>
-              <Button variant="link" className="text-primary">
-                View all
-              </Button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {playlists.map((playlist, index) => (
-                <Card key={index} className="overflow-hidden">
-                  <CardContent className="p-0">
-                    <img
-                      src={playlist.cover}
-                      alt={playlist.title}
-                      className="w-full aspect-square object-cover"
-                    />
-                    <div className="p-4">
-                      <h3 className="font-semibold mb-1">{playlist.title}</h3>
-                      <p className="text-sm text-gray-600">
-                        {playlist.tracks} tracks - {playlist.fans} fans
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-          <TabsContent value="concerts">Concerts content</TabsContent>
-          <TabsContent value="bio">Bio content</TabsContent>
-        </Tabs>
-
         <div className="mt-8">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold">Most popular release</h2>
-            <Button variant="link" className="text-primary">
-              View all
-            </Button>
+          <div className="grid grid-cols-3 gap-5">
+            <Card className="col-span-2">
+              <Top10TracksByArtist trackList={artistInf?.top10!} />
+            </Card>
+            <Card>
+              <SimilarArtistTop5 artistsList={artistInf?.related!} />
+            </Card>
           </div>
-          {/* Add content for most popular release here */}
+          <div>
+            <AlbumsByArtist albumList={artistInf?.albums!}/>
+          </div>
         </div>
       </div>
     </div>

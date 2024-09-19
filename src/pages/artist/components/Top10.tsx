@@ -1,16 +1,13 @@
 import { Button } from "@/components/ui/button";
+import { Top10 } from "@/interfaces/artist/Artist";
 import { SecondsToMinutes } from "@/other/SecToMin/SecToMin";
-import { Play } from "lucide-react";
-
-import { Heart, MoreHorizontal } from "lucide-react";
-import React from "react";
+import { MoreHorizontal, Play } from "lucide-react";
 
 interface TrackProp {
-  trackList: Track[];
+  trackList: Top10;
 }
 
-const TopTracks: React.FC<TrackProp> = ({ trackList }) => {
-  
+const Top10TracksByArtist: React.FC<TrackProp> = ({ trackList }) => {
   return (
     <div className="container mx-auto p-4 bg-white">
       <div className="flex justify-between items-center mb-4">
@@ -22,14 +19,13 @@ const TopTracks: React.FC<TrackProp> = ({ trackList }) => {
           <thead>
             <tr className="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
               <th className="px-6 py-3">Track</th>
-              <th className="px-6 py-3">Artist</th>
               <th className="px-6 py-3">Album</th>
               <th className="px-6 py-3">Duration</th>
               <th className="px-6 py-3"></th>
             </tr>
           </thead>
           <tbody>
-            {trackList.map((track) => (
+            {trackList.data.slice(0, 5).map((track) => (
               <tr
                 key={track.id}
                 className="hover:bg-[#e1dde4] transition-colors duration-200"
@@ -62,11 +58,6 @@ const TopTracks: React.FC<TrackProp> = ({ trackList }) => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">
-                    {track.artist.name}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
                     {track.album.title}
                   </div>
                 </td>
@@ -74,13 +65,6 @@ const TopTracks: React.FC<TrackProp> = ({ trackList }) => {
                   {SecondsToMinutes(track.duration)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-gray-400 hover:text-gray-500"
-                  >
-                    <Heart className="h-5 w-5" />
-                  </Button>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -98,4 +82,4 @@ const TopTracks: React.FC<TrackProp> = ({ trackList }) => {
   );
 };
 
-export default TopTracks;
+export default Top10TracksByArtist;
