@@ -59,6 +59,14 @@ const SidebarApp = () => {
         <Button
           variant="ghost"
           className="w-full justify-start"
+          onClick={() => handleNavigation("/download")}
+        >
+          <Settings className="mr-2 h-4 w-4" />
+          Download
+        </Button>
+        <Button
+          variant="ghost"
+          className="w-full justify-start"
           onClick={() => handleNavigation("/settings")}
         >
           <Settings className="mr-2 h-4 w-4" />

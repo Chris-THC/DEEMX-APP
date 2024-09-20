@@ -6,7 +6,7 @@ export const deezerInstance = new deezer.Deezer();
 export const format = deezer.TrackFormats['FLAC'];
 
 export const deemixSettings = deemix.settings.DEFAULTS;
-deemixSettings.downloadLocation = localStorage.getItem('downloadPath')!;
+deemixSettings.downloadLocation = "C:\\Users\\Cris\\Desktop\\DEEMX-PROJECT\\musicTest";
 // deemixSettings.downloadLocation = "../music";
 // deemixSettings.downloadLocation = path.join(process.cwd(), './music');
 deemixSettings.overwriteFile = deemix.settings.OverwriteOption.ONLY_TAGS;

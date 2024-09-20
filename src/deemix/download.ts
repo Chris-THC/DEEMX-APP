@@ -1,18 +1,17 @@
-import * as deemix from 'deemix';
-// import { queueDeletion, deleteQueuedFile } from './deletionQueue';
-import { deemixSettings, deezerInstance } from './deemix';
-import { logger } from './logger';
-import { promisify } from 'util';
-import { exec } from 'child_process';
-import { config } from './config';
+import * as deemix from "deemix";
+import { deemixSettings, deezerInstance } from "./deemix";
 
 export interface Metadata {
-  id: number,
-  title: string,
-  artist: string,
+  id: number;
+  title: string;
+  artist: string;
 }
 
-export async function deemixDownloadWrapper(dlObj: deemix.types.downloadObjects.IDownloadObject, coverArt: string, metadata: Metadata) {
+export async function deemixDownloadWrapper(
+  dlObj: deemix.types.downloadObjects.IDownloadObject,
+  coverArt: string,
+  metadata: Metadata
+) {
   let trackpaths: string[] = [];
 
   const listener = {
@@ -22,53 +21,45 @@ export async function deemixDownloadWrapper(dlObj: deemix.types.downloadObjects.
         // queueDeletion(data.downloadPath);
       }
 
-      if (data.state !== 'tagging' && data.state !== 'getAlbumArt' && data.state !== 'getTags' && !dlObj.isCanceled){
-        console.log((JSON.stringify({key, data})));
-        
+      if (
+        data.state !== "tagging" &&
+        data.state !== "getAlbumArt" &&
+        data.state !== "getTags" &&
+        !dlObj.isCanceled
+      ) {
+        console.log(JSON.stringify({ data: data.progress }));
       }
-    }
+    },
   };
 
-  listener.send('coverArt', coverArt);
-  listener.send('metadata', metadata); 
+  listener.send("coverArt", coverArt);
+  listener.send("metadata", metadata);
 
-  let deemixDownloader = new deemix.downloader.Downloader(deezerInstance, dlObj, deemixSettings, listener); 
+  let deemixDownloader = new deemix.downloader.Downloader(
+    deezerInstance,
+    dlObj,
+    deemixSettings,
+    listener
+  );
+  
   try {
     await deemixDownloader.start();
-  } catch(err) {
-    logger.warn((err as Error).toString());
-    logger.warn('(this may be deemix just being whiny)');
+  } catch (err) {
+    console.error((err as Error).toString());
   }
 
   if (dlObj.isCanceled) {
-    logger.debug('download gracefully cancelled, cleaning up');
+    console.info("download gracefully cancelled, cleaning up");
+
     trackpaths.forEach((q) => {
-      logger.info(`removing ${q}`);
-      // deleteQueuedFile(q);
+      console.info(`removing ${q}`);
     });
-  } else if (trackpaths.length > 1) {
-    // await ws.send(JSON.stringify({key: 'zipping'}));
-    console.log(JSON.stringify({key: 'zipping'}));
-    
-
-    const folderName = trackpaths[0].split('/').slice(-2)[0];
-    logger.debug(`zipping ${folderName}`);
-    try {
-      await promisify(exec)(`cd "data/" && "${config.server.zipBinaryLocation}" ${config.server.zipArguments} "${folderName}.zip" "${folderName}"`);
-    } catch(err) {
-      logger.error((err as Error).toString());
-      // return ws.close(1011, 'Zipping album failed');
-      console.log('Zipping album failed');
-      
-      return 'Zipping album failed';
-    }
-
-    // await ws.send(JSON.stringify({key: 'download', data: `data/${folderName}.zip`}));
-
-    // queueDeletion('./data/' + folderName + '.zip');
   } else if (trackpaths.length === 1) {
-    // await ws.send(JSON.stringify({key: 'download', data: trackpaths[0].replace(process.cwd(), '')}));
-    console.log(JSON.stringify({key: 'download', data: trackpaths[0].replace(process.cwd(), '')}));
-    
+    console.info(
+      JSON.stringify({
+        key: "download",
+        data: trackpaths[0].replace(process.cwd(), ""),
+      })
+    );
   }
 }
