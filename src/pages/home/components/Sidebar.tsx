@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Heart, Home, Library, PlusCircle, Search } from "lucide-react";
-import React from "react";
+import { Heart, Home, Library, PlusCircle, Search, User } from "lucide-react";
+import { useRouter } from "next/router";
 
 const SidebarApp = () => {
   const playlists = [
@@ -11,16 +11,39 @@ const SidebarApp = () => {
     "Top 50 Global",
   ];
 
+  const router = useRouter();
+
+  const handleNavigation = (route: string) => {
+    // Navega a la página "about"
+    router.push(route);
+  };
+
   return (
     <aside className="w-52 bg-card p-4 hidden md:block">
       <nav className="space-y-4">
-        <Button variant="ghost" className="w-full justify-start">
+        <Button
+          onClick={() => handleNavigation("/")}
+          variant="ghost"
+          className="w-full justify-start"
+        >
           <Home className="mr-2 h-4 w-4" />
           Inicio
         </Button>
-        <Button variant="ghost" className="w-full justify-start">
+        <Button
+          onClick={() => handleNavigation("/search")}
+          variant="ghost"
+          className="w-full justify-start"
+        >
           <Search className="mr-2 h-4 w-4" />
           Buscar
+        </Button>
+        <Button
+          onClick={() => handleNavigation("/artist")}
+          variant="ghost"
+          className="w-full justify-start"
+        >
+          <User className="mr-2 h-4 w-4" />
+          Artista
         </Button>
         <Button variant="ghost" className="w-full justify-start">
           <Library className="mr-2 h-4 w-4" />

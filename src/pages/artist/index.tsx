@@ -7,6 +7,7 @@ import { useState } from "react";
 import SimilarArtistTop5 from "./components/SimilarArtistTop5";
 import Top10TracksByArtist from "./components/Top10";
 import AlbumsByArtist from "./components/AlbumsByArtist";
+import PlaylistByArtist from "./components/PlayListByArtist";
 
 export default function ArtistPage() {
   const [activeTab, setActiveTab] = useState("discography");
@@ -117,6 +118,9 @@ export default function ArtistPage() {
           </div>
           <div>
             <AlbumsByArtist albumList={artistInf?.albums!}/>
+          </div>
+          <div>
+            <PlaylistByArtist playListArr={artistInf?.playlist!}/>
           </div>
         </div>
       </div>

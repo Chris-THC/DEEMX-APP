@@ -131,7 +131,7 @@ interface Daum3 {
   type: string;
 }
 
-interface Playlist {
+export interface Playlist {
   data: Daum4[];
   total: number;
   next: string;
