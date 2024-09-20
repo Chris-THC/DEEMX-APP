@@ -2,7 +2,10 @@ import * as deemix from "deemix";
 import { deezerInstance, format } from "../deemix";
 import { deemixDownloadWrapper } from "../download";
 
-export const trackToDownload = async (id: string | number) => {
+export const trackToDownload = async (
+  id: string | number,
+  onProgress: (progress: number) => void
+) => {
   let dlObj: deemix.types.downloadObjects.IDownloadObject;
 
   try {
@@ -15,8 +18,6 @@ export const trackToDownload = async (id: string | number) => {
     console.log("Track no encontrado... :(");
     return "Track no encontrado... :(";
   }
-
-  let isDone = false;
 
   let trackInfoAux = await deezerInstance.api.get_track(
     parseInt(id.toString())
@@ -31,11 +32,15 @@ export const trackToDownload = async (id: string | number) => {
     return `Track with ${id} not found`;
   }
 
-  // @ts-expect-error
-  await deemixDownloadWrapper(dlObj, trackInfoAux.id, {
-    id: track.id,
-    title: track.title,
-    artist: trackInfoAux.artist.name,
-  });
-  isDone = true;
+  // Llamar al wrapper y pasar el callback de progreso
+  await deemixDownloadWrapper(
+    dlObj,
+    trackInfoAux.id.toString(),
+    {
+      id: track.id,
+      title: track.title,
+      artist: trackInfoAux.artist.name,
+    },
+    onProgress
+  );
 };

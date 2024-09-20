@@ -10,7 +10,8 @@ export interface Metadata {
 export async function deemixDownloadWrapper(
   dlObj: deemix.types.downloadObjects.IDownloadObject,
   coverArt: string,
-  metadata: Metadata
+  metadata: Metadata,
+  onProgress: (progress: number) => void // Callback para enviar progreso
 ) {
   let trackpaths: string[] = [];
 
@@ -18,7 +19,6 @@ export async function deemixDownloadWrapper(
     send(key: any, data: any) {
       if (data.downloaded) {
         trackpaths.push(data.downloadPath);
-        // queueDeletion(data.downloadPath);
       }
 
       if (
@@ -28,6 +28,7 @@ export async function deemixDownloadWrapper(
         !dlObj.isCanceled
       ) {
         console.log(JSON.stringify({ data: data.progress }));
+        onProgress(data.progress); // Llama a la función de callback con el progreso
       }
     },
   };
@@ -41,7 +42,7 @@ export async function deemixDownloadWrapper(
     deemixSettings,
     listener
   );
-  
+
   try {
     await deemixDownloader.start();
   } catch (err) {
