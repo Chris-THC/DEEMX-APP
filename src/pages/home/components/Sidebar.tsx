@@ -14,7 +14,6 @@ const SidebarApp = () => {
   const router = useRouter();
 
   const handleNavigation = (route: string) => {
-    // Navega a la página "about"
     router.push(route);
   };
 

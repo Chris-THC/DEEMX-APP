@@ -1,16 +1,14 @@
-export interface ArtistFull {
-  artist: Artist;
-  top10: Top10;
-  albums: Albums;
-  related: Related;
-  playlist: Playlist;
+export interface SearchI {
+  artistByS: ArtistByS[];
+  tracksByS: TracksByS;
+  albumsByS: AlbumsByS;
+  playlistsByS: PlaylistsByS;
 }
 
-interface Artist {
+export interface ArtistByS {
   id: number;
   name: string;
   link: string;
-  share: string;
   picture: string;
   picture_small: string;
   picture_medium: string;
@@ -23,7 +21,7 @@ interface Artist {
   type: string;
 }
 
-export interface Top10 {
+export interface TracksByS {
   data: Daum[];
   total: number;
   next: string;
@@ -42,32 +40,21 @@ interface Daum {
   explicit_content_lyrics: number;
   explicit_content_cover: number;
   preview: string;
-  contributors: Contributor[];
   md5_image: string;
-  artist: Artist2;
+  artist: Artist;
   album: Album;
   type: string;
 }
 
-interface Contributor {
+interface Artist {
   id: number;
   name: string;
   link: string;
-  share: string;
   picture: string;
   picture_small: string;
   picture_medium: string;
   picture_big: string;
   picture_xl: string;
-  radio: boolean;
-  tracklist: string;
-  type: string;
-  role: string;
-}
-
-interface Artist2 {
-  id: number;
-  name: string;
   tracklist: string;
   type: string;
 }
@@ -85,7 +72,7 @@ interface Album {
   type: string;
 }
 
-export interface Albums {
+export interface AlbumsByS {
   data: Daum2[];
   total: number;
   next: string;
@@ -102,20 +89,15 @@ interface Daum2 {
   cover_xl: string;
   md5_image: string;
   genre_id: number;
-  fans: number;
-  release_date: string;
+  nb_tracks: number;
   record_type: string;
   tracklist: string;
   explicit_lyrics: boolean;
+  artist: Artist2;
   type: string;
 }
 
-export interface Related {
-  data: Daum3[];
-  total: number;
-}
-
-interface Daum3 {
+interface Artist2 {
   id: number;
   name: string;
   link: string;
@@ -124,23 +106,21 @@ interface Daum3 {
   picture_medium: string;
   picture_big: string;
   picture_xl: string;
-  nb_album: number;
-  nb_fan: number;
-  radio: boolean;
   tracklist: string;
   type: string;
 }
 
-interface Playlist {
-  data: Daum4[];
+export interface PlaylistsByS {
+  data: Daum3[];
   total: number;
   next: string;
 }
 
-interface Daum4 {
+interface Daum3 {
   id: number;
   title: string;
   public: boolean;
+  nb_tracks: number;
   link: string;
   picture: string;
   picture_small: string;
