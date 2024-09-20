@@ -2,7 +2,7 @@ import { ArtistFull } from "@/interfaces/artist/Artist";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const artistInf = async (idArtist: string | number): Promise<ArtistFull> => {
+export const artistInFn = async (idArtist: string | number): Promise<ArtistFull> => {
   try {
     const response = await axios.get(`/api/artist?id=${idArtist}`);
     return response.data;
@@ -14,7 +14,9 @@ const artistInf = async (idArtist: string | number): Promise<ArtistFull> => {
 
 export const useArtist = (idArtist: string | number): UseQueryResult<ArtistFull> => {
   return useQuery({
-    queryKey: ["getArtist"],
-    queryFn: () => artistInf(idArtist),
+    queryKey: ["getArtist", idArtist],  // Incluye idArtist en el queryKey
+    queryFn: () => artistInFn(idArtist),
+    // Opcionalmente puedes agregar enabled para asegurarte de que solo se ejecute si idArtist está definido
+    enabled: !!idArtist,
   });
 };

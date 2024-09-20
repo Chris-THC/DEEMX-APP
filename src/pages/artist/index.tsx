@@ -1,73 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useArtist } from "@/hooks/artist/Artist";
+import IsLoadingComponent from "@/other/isLoading/IsloadingComponent";
 import { storeArtistInfo } from "@/store/artist/ArtistStore";
 import { HeartIcon, PlayIcon, ShareIcon } from "lucide-react";
-import { useState } from "react";
-import SimilarArtistTop5 from "./components/SimilarArtistTop5";
-import Top10TracksByArtist from "./components/Top10";
 import AlbumsByArtist from "./components/AlbumsByArtist";
 import PlaylistByArtist from "./components/PlayListByArtist";
+import SimilarArtistTop5 from "./components/SimilarArtistTop5";
+import Top10TracksByArtist from "./components/Top10";
 
 export default function ArtistPage() {
-  const [activeTab, setActiveTab] = useState("discography");
   const { idArtist } = storeArtistInfo();
 
   const { data: artistInf, isLoading } = useArtist(idArtist);
 
-  const topTracks = [
-    {
-      title: "Shelter",
-      cover:
-        "https://e-cdns-images.dzcdn.net/images/cover/f2bc007e9133c946ac3c3907ddc5d2ea/56x56-000000-80-0-0.jpg",
-    },
-    {
-      title: "Believe It",
-      cover:
-        "https://e-cdns-images.dzcdn.net/images/cover/f2bc007e9133c946ac3c3907ddc5d2ea/56x56-000000-80-0-0.jpg",
-    },
-    {
-      title: "Finale (feat. Nicholas Petricca)",
-      cover:
-        "https://e-cdns-images.dzcdn.net/images/cover/f2bc007e9133c946ac3c3907ddc5d2ea/56x56-000000-80-0-0.jpg",
-    },
-    {
-      title: "Be Fine",
-      cover:
-        "https://e-cdns-images.dzcdn.net/images/cover/f2bc007e9133c946ac3c3907ddc5d2ea/56x56-000000-80-0-0.jpg",
-    },
-  ];
-
-  const playlists = [
-    {
-      title: "100% Madeon",
-      tracks: 30,
-      fans: 157,
-      cover:
-        "https://e-cdns-images.dzcdn.net/images/playlist/cfea4f6b56b0b0c45e6c1b9ef54610c4/250x250-000000-80-0-0.jpg",
-    },
-    {
-      title: "Tech House 2024",
-      tracks: 127,
-      fans: 6524,
-      cover:
-        "https://e-cdns-images.dzcdn.net/images/playlist/cfea4f6b56b0b0c45e6c1b9ef54610c4/250x250-000000-80-0-0.jpg",
-    },
-    {
-      title: "Workout Mix 2024 - Fitness & Gym Motivation",
-      tracks: 94,
-      fans: 11698,
-      cover:
-        "https://e-cdns-images.dzcdn.net/images/playlist/cfea4f6b56b0b0c45e6c1b9ef54610c4/250x250-000000-80-0-0.jpg",
-    },
-  ];
-
   if (isLoading) {
-    return (
-      <div className="flex justify-center align-middle h-full ">
-        <h3>Loading...</h3>
-      </div>
-    );
+    return <IsLoadingComponent />;
   }
 
   return (
@@ -117,10 +65,10 @@ export default function ArtistPage() {
             </Card>
           </div>
           <div>
-            <AlbumsByArtist albumList={artistInf?.albums!}/>
+            <AlbumsByArtist albumList={artistInf?.albums!} />
           </div>
           <div>
-            <PlaylistByArtist playListArr={artistInf?.playlist!}/>
+            <PlaylistByArtist playListArr={artistInf?.playlist!} />
           </div>
         </div>
       </div>

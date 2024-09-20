@@ -14,7 +14,9 @@ export const searchAnything = async (searchSomething: string): Promise<SearchI> 
 
 export const useSearch = (search: string): UseQueryResult<SearchI> => {
   return useQuery({
-    queryKey: ["searchInfo"],
+    queryKey: ["searchInfo", search],  // Incluye el parámetro `search` en el queryKey
     queryFn: () => searchAnything(search),
+    // Puedes agregar la opción `enabled` para evitar que la consulta se ejecute con un valor vacío
+    enabled: !!search,
   });
 };

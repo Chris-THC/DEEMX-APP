@@ -1,14 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Heart, Home, Library, PlusCircle, Search, User } from "lucide-react";
+import {
+  Heart,
+  Home,
+  Library,
+  PlusCircle,
+  Search,
+  Settings,
+  User,
+} from "lucide-react";
 import { useRouter } from "next/router";
 
 const SidebarApp = () => {
   const playlists = [
     "Mi lista de reproducción",
-    "Favoritos",
-    "Descubrimiento semanal",
-    "Top 50 Global",
+    // "Favoritos",
+    // "Descubrimiento semanal",
+    // "Top 50 Global",
   ];
 
   const router = useRouter();
@@ -47,6 +55,14 @@ const SidebarApp = () => {
         <Button variant="ghost" className="w-full justify-start">
           <Library className="mr-2 h-4 w-4" />
           Tu biblioteca
+        </Button>
+        <Button
+          variant="ghost"
+          className="w-full justify-start"
+          onClick={() => handleNavigation("/settings")}
+        >
+          <Settings className="mr-2 h-4 w-4" />
+          Ajustes
         </Button>
       </nav>
       <div className="mt-8">

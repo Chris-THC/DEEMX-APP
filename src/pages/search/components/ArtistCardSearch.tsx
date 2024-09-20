@@ -9,9 +9,9 @@ interface CardInfo {
 }
 
 const ArtistCardSearch: React.FC<CardInfo> = ({ artist }) => {
-  const router = useRouter();
   const { setIdArtist } = storeArtistInfo();
-
+  const router = useRouter();
+  
   const handleNavigationArtist = (route: string) => {
     setIdArtist(artist.id);
     router.push(route);
@@ -21,7 +21,7 @@ const ArtistCardSearch: React.FC<CardInfo> = ({ artist }) => {
     return <></>;
   }
   return (
-    <section className="mb-12">
+    <section className="mb-2">
       <Card className="overflow-hidden">
         <CardContent className="p-0 relative">
           <img
@@ -33,7 +33,7 @@ const ArtistCardSearch: React.FC<CardInfo> = ({ artist }) => {
           <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent flex items-end p-6">
             <div className="text-white">
               <img
-                src={artist.picture_medium}
+                src={artist.picture_xl}
                 alt={artist.name}
                 height={200}
                 width={200}

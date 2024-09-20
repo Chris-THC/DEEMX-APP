@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Related } from "@/interfaces/artist/Artist";
 import { ArtistByS } from "@/interfaces/search/Search";
+import { storeArtistInfo } from "@/store/artist/ArtistStore";
+import { useRouter } from "next/router";
 import React from "react";
 
 interface SimilarProps {
@@ -8,6 +9,14 @@ interface SimilarProps {
 }
 
 const SimilarArtistCard: React.FC<SimilarProps> = ({ artistsList }) => {
+  const { setIdArtist } = storeArtistInfo();
+  const router = useRouter();
+
+  const handleNavigationArtist = (route: string, idArtist: string | number) => {
+    setIdArtist(idArtist);
+    router.push(route);
+  };
+
   return (
     <div className="w-full max-w-md mx-auto p-4 bg-background">
       <h2 className="text-2xl font-semibold mb-4">Artistas Similares</h2>
@@ -20,10 +29,16 @@ const SimilarArtistCard: React.FC<SimilarProps> = ({ artistsList }) => {
                 alt={artist.name}
                 width={60}
                 height={60}
-                className="rounded-full"
+                className="rounded-full cursor-pointer"
+                onClick={() => handleNavigationArtist("/artist", artist.id)}
               />
               <div>
-                <p className="font-semibold">{artist.name}</p>
+                <p
+                  onClick={() => handleNavigationArtist("/artist", artist.id)}
+                  className="font-semibold cursor-pointer"
+                >
+                  {artist.name}
+                </p>
                 <p className="text-sm text-muted-foreground">
                   {artist.nb_fan} fans
                 </p>
