@@ -1,6 +1,8 @@
 import { Card } from "@/components/ui/card";
-import { useSearch } from "@/hooks/search/UseSearch";
+import { searchAnything } from "@/hooks/search/UseSearch";
+import { SearchI } from "@/interfaces/search/Search";
 import { storeSearch } from "@/store/search/SearchStore";
+import { useEffect, useState } from "react";
 import AlbumsBySearch from "./components/AlbumsCradSearch";
 import ArtistCardSearch from "./components/ArtistCardSearch";
 import PlaylistBySearch from "./components/PlaylistSearch";
@@ -10,11 +12,18 @@ import TrackCardSearch from "./components/TrackCradSearch";
 const SearchMain = () => {
   const { searchText } = storeSearch();
 
-  const { data: searchInf, isLoading } = useSearch(searchText);
+  // const { data: searchInf, isLoading } = useSearch(searchText);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const [searchInf, setSearchInf] = useState<SearchI | null>(null);
+
+  const GetInfo = async () => {
+    const infoSearch = await searchAnything(searchText);
+    setSearchInf(infoSearch);
+  };
+
+  useEffect(() => {
+    GetInfo();
+  }, [searchText]);
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">

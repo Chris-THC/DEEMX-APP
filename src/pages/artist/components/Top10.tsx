@@ -57,7 +57,7 @@ const Top10TracksByArtist: React.FC<TrackProp> = ({ trackList }) => {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
+                  <div className="text-sm font-medium text-gray-900 max-w-[250px] overflow-hidden whitespace-nowrap overflow-ellipsis">
                     {track.album.title}
                   </div>
                 </td>

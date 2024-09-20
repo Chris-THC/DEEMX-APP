@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArtistByS } from "@/interfaces/search/Search";
-import { Play } from "lucide-react";
+import { storeArtistInfo } from "@/store/artist/ArtistStore";
+import { useRouter } from "next/router";
 import React from "react";
 
 interface CardInfo {
@@ -9,6 +9,14 @@ interface CardInfo {
 }
 
 const ArtistCardSearch: React.FC<CardInfo> = ({ artist }) => {
+  const router = useRouter();
+  const { setIdArtist } = storeArtistInfo();
+
+  const handleNavigationArtist = (route: string) => {
+    setIdArtist(artist.id);
+    router.push(route);
+  };
+
   if (!artist) {
     return <></>;
   }
@@ -32,15 +40,17 @@ const ArtistCardSearch: React.FC<CardInfo> = ({ artist }) => {
                 className="rounded-[8px] shadow-lg"
               />
 
-              <h3 className="text-3xl font-bold mb-2">{artist.name}</h3>
+              <h3
+                onClick={() => handleNavigationArtist("/artist")}
+                className="cursor-pointer text-3xl font-bold mb-2"
+              >
+                {artist.name}
+              </h3>
               <p className="text-lg">
-                Tu mezcla personal de favoritos y nuevos descubrimientos
+                {artist.nb_fan.toLocaleString()} fans · {artist.nb_album} albums
               </p>
             </div>
           </div>
-          <Button className="absolute bottom-4 right-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full">
-            <Play className="h-6 w-6" />
-          </Button>
         </CardContent>
       </Card>
     </section>

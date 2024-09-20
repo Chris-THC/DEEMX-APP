@@ -19,6 +19,12 @@ const SearchBar = () => {
     handleNavigation("/search");
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      setSearchText(searchTerm);
+    }
+  };
+
   return (
     <div className="shadow-sm w-[80%]">
       <div className="max-w-7xl mx-4 sm:px-1 lg:px-1 py-4">
@@ -28,6 +34,7 @@ const SearchBar = () => {
             placeholder="Buscar..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
             className="flex-grow bg-gray-100 border-none focus:ring-2 focus:ring-blue-500"
           />
           <Button

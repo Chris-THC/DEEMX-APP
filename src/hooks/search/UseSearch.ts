@@ -2,7 +2,7 @@ import axios from "axios";
 import { SearchI } from "@/interfaces/search/Search";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 
-const searchAnything = async (searchSomething: string): Promise<SearchI> => {
+export const searchAnything = async (searchSomething: string): Promise<SearchI> => {
   try {
     const response = await axios.get(`/api/search?search=${searchSomething}`);
     return response.data;

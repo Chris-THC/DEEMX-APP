@@ -19,13 +19,13 @@ const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
           <thead>
             <tr className="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
               <th className="px-6 py-3">Track</th>
-              {/* <th className="px-6 py-3">Album</th> */}
+              <th className="px-6 py-3">Artista</th>
               <th className="px-6 py-3">Duration</th>
               <th className="px-6 py-3"></th>
             </tr>
           </thead>
           <tbody>
-            {trackList.data.slice(0,10).map((track) => (
+            {trackList.data.slice(0, 10).map((track) => (
               <tr
                 key={track.id}
                 className="hover:bg-[#e1dde4] transition-colors duration-200"
@@ -43,9 +43,10 @@ const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
                       </div>
                     </div>
                     <div className="ml-4">
-                      <div className="text-sm font-medium text-gray-900">
+                      <div className="text-sm font-medium text-gray-900 max-w-[250px] overflow-hidden whitespace-nowrap overflow-ellipsis">
                         {track.title}
                       </div>
+
                       {track.explicit_lyrics ? (
                         <span className="inline-block bg-gray-200 rounded px-1 py-0.5 text-xs font-semibold text-gray-700 mr-2">
                           E
@@ -56,11 +57,11 @@ const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
                     </div>
                   </div>
                 </td>
-                {/* <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">
-                    {track.album.title}
+                    {track.artist.name}
                   </div>
-                </td> */}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {SecondsToMinutes(track.duration)}
                 </td>
