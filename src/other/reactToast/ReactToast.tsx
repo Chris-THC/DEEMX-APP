@@ -5,7 +5,6 @@ const showDownloadToast = (
   title: string,
   artist: string,
   coverUrl: string,
-  progress: number
 ) => {
   toast.custom((t) => (
     <div

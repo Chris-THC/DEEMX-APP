@@ -3,6 +3,7 @@ import { useDownloadTrack } from "@/hooks/downloader/Downloader";
 import { TracksByS } from "@/interfaces/search/Search";
 import { SecondsToMinutes } from "@/other/SecToMin/SecToMin";
 import showDownloadToast from "@/other/reactToast/ReactToast";
+import { TrackCardStore, storeTrack } from "@/store/track/TrackStore";
 import { Download, Play } from "lucide-react";
 
 interface TrackProp {
@@ -11,6 +12,7 @@ interface TrackProp {
 
 const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
   const downloader = useDownloadTrack();
+  const { setTrackToDonw } = storeTrack();
 
   return (
     <div className="container mx-auto p-4 bg-white">
@@ -75,17 +77,20 @@ const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
                     size="sm"
                     className="text-gray-400 hover:text-gray-500"
                     onClick={() => {
-                      console.log(track.id.toString());
-
+                      const objectToCard: TrackCardStore = {
+                        title: track.title,
+                        artist: track.artist.name,
+                        coverUrl: track.album.cover_big,
+                      };
+                      setTrackToDonw(objectToCard);
                       // Ejemplo de uso
                       showDownloadToast(
                         track.title,
                         track.artist.name,
-                        track.album.cover_big,
-                        50 // Progreso en porcentaje
+                        track.album.cover_big
                       );
 
-                      // downloader.mutate(track.id.toString());
+                      downloader.mutate(track.id.toString());
                     }}
                   >
                     <Download className="h-5 w-5" />

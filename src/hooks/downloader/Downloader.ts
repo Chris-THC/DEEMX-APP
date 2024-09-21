@@ -4,10 +4,7 @@ import {
 } from "@tanstack/react-query";
 import axios from "axios";
 
-const downloadTrackFn = async (idTrack: string): Promise<any> => {
-
-    console.log(`desde hook: ${idTrack}`);
-    
+const downloadTrackFn = async (idTrack: string): Promise<any> => {    
   try {
     const response = await axios.post("/api/download", {
         idTrack,
@@ -25,12 +22,6 @@ const downloadTrackFn = async (idTrack: string): Promise<any> => {
     return false;
   }
 };
-
-// export const useDownloadTrack = (trackId: string | number): UseMutationResult<string> => {
-//     return useMutation({
-//       mutationFn: () => downloadTrackFn(trackId)
-//     });
-//   };
 
 export const useDownloadTrack = (): UseMutationResult<number, Error, string, unknown> => {
     return useMutation<number, Error, string>({

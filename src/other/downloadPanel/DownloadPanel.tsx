@@ -1,19 +1,82 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Download } from "lucide-react";
+import { TrackCardStore, storeTrack } from "@/store/track/TrackStore";
+import { Download, DownloadIcon } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import io from "socket.io-client";
+
+interface TrackProp {
+  trackToDonw: TrackCardStore;
+}
+
+const CradDownload: React.FC<TrackProp> = ({ trackToDonw }) => {
+  const [downloadProgress, setDownloadProgress] = useState(0);
+  const [isSuccesDownload, setIsSuccesDownload] = useState(false);
+
+  useEffect(() => {
+    const socket = io();
+
+    socket.on("download-progress", (data) => {
+      setDownloadProgress(data.progress);
+      // console.info(data);
+    });
+    socket.on("download-success", (data) => {
+      setIsSuccesDownload(data.success);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  return (
+    <div className="bg-white rounded-lg shadow-md p-3 w-full max-w-xs flex items-center space-x-3">
+      <img
+        src={trackToDonw?.coverUrl}
+        alt="Carátula del álbum"
+        className="w-10 h-10 rounded-md object-cover"
+      />
+      <div className="flex-1 min-w-0 ml-2">
+        <div className="flex justify-between items-start">
+          <div className="truncate">
+            <h2 className="text-sm font-medium text-gray-800 truncate">
+              {trackToDonw?.title}
+            </h2>
+            <p className="text-xs text-gray-600 truncate">
+              {trackToDonw?.artist}
+            </p>
+          </div>
+          <button
+            aria-label="Descargar canción"
+            className="text-gray-500 hover:text-gray-700 transition-colors flex-shrink-0 ml-2"
+          >
+            <DownloadIcon className="w-4 h-4" />
+          </button>
+        </div>
+        <div style={{ marginTop: 10 }}>
+          <div className="bg-gray-200 h-1 rounded-full overflow-hidden">
+            <Progress
+              value={isSuccesDownload ? 100 : downloadProgress}
+              style={{ height: "5px" }}
+              className="w-full"
+              color={"#22c55e"}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const DownloadPanel = () => {
+  const { trackToDonw } = storeTrack();
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -24,30 +87,11 @@ const DownloadPanel = () => {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
-          <SheetDescription>
-            Make changes to your profile here. Click save when you're done.
-          </SheetDescription>
+          <SheetTitle>Descargas</SheetTitle>
         </SheetHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
-          </div>
+          {!trackToDonw ? <></> : <CradDownload trackToDonw={trackToDonw} />}
         </div>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
-          </SheetClose>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   );

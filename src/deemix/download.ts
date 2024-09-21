@@ -27,8 +27,10 @@ export async function deemixDownloadWrapper(
         data.state !== "getTags" &&
         !dlObj.isCanceled
       ) {
-        console.log(JSON.stringify({ data: data.progress }));
-        onProgress(data.progress); // Llama a la función de callback con el progreso
+        if (data.progress !== undefined) {
+          console.log(data.progress);
+          onProgress(data.progress); // Llama a la función de callback con el progreso
+        }
       }
     },
   };

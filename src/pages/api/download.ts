@@ -16,7 +16,10 @@ type NextApiResponseSocketIO = NextApiResponse & {
   };
 };
 
-const Downloader = async (req: NextApiRequest, res: NextApiResponseSocketIO) => {
+const Downloader = async (
+  req: NextApiRequest,
+  res: NextApiResponseSocketIO
+) => {
   if (!res.socket.server.io) {
     console.log("Iniciando servidor Socket.IO");
     const io = new SocketIOServer(res.socket.server);
@@ -31,9 +34,6 @@ const Downloader = async (req: NextApiRequest, res: NextApiResponseSocketIO) => 
     const { idTrack } = req.body;
     const arl: string = settingsDeemx.arl;
 
-    console.log(`Valor: ${idTrack}`);
-    
-
     // Iniciar sesión en Deezer
     await deezerInstance.login_via_arl(arl);
 
@@ -42,9 +42,16 @@ const Downloader = async (req: NextApiRequest, res: NextApiResponseSocketIO) => 
       res.socket.server.io.emit("download-progress", { progress });
     });
 
+    // Emitir evento de éxito cuando la descarga se complete
+    res.socket.server.io.emit("download-success", { success: true });
+
     return res.status(200).json({ message: "Descarga completada" });
   } catch (error) {
     console.error("Error en la descarga:", error);
+
+    // Emitir evento de error si la descarga falla
+    res.socket.server.io.emit("download-failure", { success: false });
+
     return res.status(500).json({ error: "Error en la descarga" });
   }
 };
