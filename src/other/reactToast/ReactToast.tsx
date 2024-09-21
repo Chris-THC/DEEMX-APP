@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Download } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -9,12 +8,12 @@ const showDownloadToast = (
   progress: number
 ) => {
   toast.custom((t) => (
-    <Card
+    <div
       className={`${
         t.visible ? "animate-enter" : "animate-leave"
-      } max-w-md w-[50%] bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+      } max-w-md w-[30%] bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
     >
-      <CardContent className="p-3">
+      <div className="flex-1 w-0 p-4">
         <div className="flex items-center space-x-3">
           <div className="flex-shrink-0 mr-2">
             <img
@@ -36,12 +35,11 @@ const showDownloadToast = (
             </p>
           </div>
           <div className="flex-row justify-center align-middle">
-            <span className="text-xs text-muted-foreground mx-5">33%</span>
-            <Download className="h-4 w-4 text-muted-foreground mx-5" />
+            <Download className="h-5 w-5 text-muted-foreground mx-5" />
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   ));
 };
 

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import DownloadPanel from "@/other/downloadPanel/DownloadPanel";
 import {
   Heart,
   Home,
@@ -56,14 +57,7 @@ const SidebarApp = () => {
           <Library className="mr-2 h-4 w-4" />
           Tu biblioteca
         </Button>
-        <Button
-          variant="ghost"
-          className="w-full justify-start"
-          onClick={() => handleNavigation("/download")}
-        >
-          <Settings className="mr-2 h-4 w-4" />
-          Download
-        </Button>
+        <DownloadPanel />
         <Button
           variant="ghost"
           className="w-full justify-start"
