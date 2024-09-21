@@ -1,5 +1,6 @@
 import PlaybackBar from "@/pages/home/components/PlaybackBar";
 import SidebarApp from "@/pages/home/components/Sidebar";
+import { Toaster } from "react-hot-toast";
 import SearchBar from "./SearchBar";
 
 const LayoutComponent = ({ children }: { children: React.ReactNode }) => {
@@ -16,6 +17,7 @@ const LayoutComponent = ({ children }: { children: React.ReactNode }) => {
         <main className="flex-1 overflow-auto">{children}</main>
       </div>
       <PlaybackBar />
+      <Toaster position="top-right" reverseOrder={false} />
     </div>
   );
 };

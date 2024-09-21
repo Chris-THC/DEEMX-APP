@@ -1,85 +1,150 @@
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { toast } from "@/hooks/use-toast";
-import { useState, useEffect } from "react";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@radix-ui/react-label";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-const SettingsScreen = () => {
-  const [arlCodigo, setArlCodigo] = useState<string>("");
-  const [rutaDescarga, setRutaDescarga] = useState<string>("");
+export default function SettingsPage() {
+  const [arl, setArl] = useState<string>("");
+  const [downloadLocation, setDownloadLocation] = useState<string>();
+  const [maxBitrate, setMaxBitrate] = useState<string>("");
+  const [coverSize, setCoverSize] = useState<string>("");
+  const [syncLyrics, setSyncLyrics] = useState<string>("");
 
-  // Cargar configuraciones desde el localStorage cuando el componente se monta
+  const fetchSettings = async () => {
+    try {
+      const response = await axios.get("/api/settings");
+      const data = response.data;
+      setArl(data.arl || "");
+      setDownloadLocation(data.downloadLocation || "");
+      setMaxBitrate(data.maxBitrate || "");
+      setCoverSize(data.coverSize || "");
+      setSyncLyrics(data.syncLyrics || "");
+    } catch (error) {
+      console.error("Error fetching settings:", error);
+    }
+  };
+
+  // Fetch current settings on page load
   useEffect(() => {
-    const savedArlCodigo = localStorage.getItem("arlCodigo");
-    const savedRutaDescarga = localStorage.getItem("rutaDescarga");
-
-    if (savedArlCodigo) setArlCodigo(savedArlCodigo);
-    if (savedRutaDescarga) setRutaDescarga(savedRutaDescarga);
+    fetchSettings();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Guardar las configuraciones en el localStorage
-    localStorage.setItem("arlToken", arlCodigo);
-    localStorage.setItem("downloadPath", rutaDescarga);
 
-    console.log("Configuraciones guardadas:", { arlCodigo, rutaDescarga });
-    
-    toast({
-      title: "Configuraciones guardadas",
-      description:
-        "Tus configuraciones de ARL han sido actualizadas exitosamente.",
+    const response = await fetch("/api/settings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        arl,
+        downloadLocation,
+        maxBitrate,
+        coverSize,
+        syncLyrics,
+      }),
     });
+
+    if (response.ok) {
+      alert("Settings updated successfully!");
+    } else {
+      alert("Failed to update settings");
+    }
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle>Configuración ARL</CardTitle>
-        <CardDescription>
-          Configura el código ARL y la ruta de descarga
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit}>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="arlCodigo">Código ARL</Label>
-              <Input
-                id="arlCodigo"
-                placeholder="Ingrese el código ARL"
-                value={arlCodigo}
-                onChange={(e) => setArlCodigo(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="rutaDescarga">Ruta de Descarga</Label>
-              <Input
-                id="rutaDescarga"
-                placeholder="Ingrese la ruta de descarga"
-                value={rutaDescarga}
-                onChange={(e) => setRutaDescarga(e.target.value)}
-              />
-            </div>
-          </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex justify-end">
-        <Button type="submit" onClick={handleSubmit}>
-          Guardar Configuraciones
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-};
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-[80%] mx-auto my-5 p-6 rounded-lg shadow-lg space-y-6 bg-[#f4f4f5]"
+    >
+      <div className="flex flex-col space-y-2">
+        <Label className="text-sm font-semibold text-gray-700">ARL</Label>
+        <input
+          type="text"
+          value={arl}
+          onChange={(e) => setArl(e.target.value)}
+          className="w-full p-3 bg-white text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Agrear ARL"
+        />
+      </div>
 
-export default SettingsScreen;
+      <div className="flex flex-col space-y-2">
+        <Label className="text-sm font-semibold text-gray-700">
+          Ruta de descarga
+        </Label>
+        <input
+          type="text"
+          value={downloadLocation}
+          onChange={(e) => setDownloadLocation(e.target.value)}
+          className="w-full p-3 bg-white text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Ej: C:\Descargas\Musica"
+        />
+      </div>
+
+      <div className="flex flex-col space-y-2">
+        <Label htmlFor="calidadAudio">Calidad del Audio</Label>
+        <Select
+          name="calidadAudio"
+          value={maxBitrate}
+          onValueChange={setMaxBitrate}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Selecciona la calidad" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="MP3_128">128 kbps</SelectItem>
+            <SelectItem value="MP3_320">320 kbps</SelectItem>
+            <SelectItem value="FLAC">FLAC</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="flex flex-col space-y-2">
+        <Label htmlFor="tamanoCaratula">Tamaño de la Carátula</Label>
+        <Select
+          name="tamanoCaratula"
+          value={coverSize}
+          onValueChange={setCoverSize}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Selecciona el tamaño" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="500">500x500</SelectItem>
+            <SelectItem value="1000">1000x1000</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="flex flex-col space-y-2">
+        <Label htmlFor="syncLetras">Agregar letras sincronizadas</Label>
+        <Select
+          name="syncLetras"
+          value={syncLyrics}
+          onValueChange={setSyncLyrics}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Selecciona una opción" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="yes">Sí</SelectItem>
+            <SelectItem value="no">No</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <Button
+        type="submit"
+        className="w-full p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
+      >
+        Save Settings
+      </Button>
+    </form>
+  );
+}

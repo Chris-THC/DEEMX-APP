@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import io from "socket.io-client"; // Importar cliente de Socket.IO
 
 const DownloadButton = () => {
@@ -28,11 +28,10 @@ const DownloadButton = () => {
     setDownloadStatus("");
     setDownloadProgress(0); // Reiniciar el progreso al iniciar una nueva descarga
 
-    const arl = localStorage.getItem("arlToken");
+    
 
     try {
       const response = await axios.post("/api/download", {
-        arl,
         trackId,
       });
 

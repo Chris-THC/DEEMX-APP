@@ -1,13 +1,17 @@
 import { Button } from "@/components/ui/button";
+import { useDownloadTrack } from "@/hooks/downloader/Downloader";
 import { TracksByS } from "@/interfaces/search/Search";
 import { SecondsToMinutes } from "@/other/SecToMin/SecToMin";
-import { MoreHorizontal, Play } from "lucide-react";
+import showDownloadToast from "@/other/reactToast/ReactToast";
+import { Download, Play } from "lucide-react";
 
 interface TrackProp {
   trackList: TracksByS;
 }
 
 const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
+  const downloader = useDownloadTrack();
+
   return (
     <div className="container mx-auto p-4 bg-white">
       <div className="flex justify-between items-center mb-4">
@@ -70,8 +74,21 @@ const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
                     variant="ghost"
                     size="sm"
                     className="text-gray-400 hover:text-gray-500"
+                    onClick={() => {
+                      console.log(track.id.toString());
+
+                      // Ejemplo de uso
+                      showDownloadToast(
+                        track.title,
+                        track.artist.name,
+                        track.album.cover_big,
+                        50 // Progreso en porcentaje
+                      );
+
+                      // downloader.mutate(track.id.toString());
+                    }}
                   >
-                    <MoreHorizontal className="h-5 w-5" />
+                    <Download className="h-5 w-5" />
                   </Button>
                 </td>
               </tr>
