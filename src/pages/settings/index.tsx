@@ -139,12 +139,14 @@ export default function SettingsPage() {
           </SelectContent>
         </Select>
       </div>
+      <div className="flex-row justify-center align-middle">
       <Button
         type="submit"
-        className="w-full p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
+        className="w-[20%] p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
       >
-        Save Settings
+        Guardar Cambios
       </Button>
+      </div>
     </form>
   );
 }

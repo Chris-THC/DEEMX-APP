@@ -27,7 +27,7 @@ export interface TracksByS {
   next: string;
 }
 
-interface Daum {
+export interface Daum {
   id: number;
   readable: boolean;
   title: string;

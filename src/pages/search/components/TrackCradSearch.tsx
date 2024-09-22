@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useDownloadTrack } from "@/hooks/downloader/Downloader";
 import { TracksByS } from "@/interfaces/search/Search";
 import { SecondsToMinutes } from "@/other/SecToMin/SecToMin";
+import DownloadPanel from "@/other/downloadPanel/DownloadPanel";
 import showDownloadToast from "@/other/reactToast/ReactToast";
 import { TrackCardStore, storeTrack } from "@/store/track/TrackStore";
 import { Download, Play } from "lucide-react";
@@ -72,7 +73,7 @@ const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
                   {SecondsToMinutes(track.duration)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <Button
+                  {/* <Button
                     variant="ghost"
                     size="sm"
                     className="text-gray-400 hover:text-gray-500"
@@ -94,7 +95,20 @@ const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
                     }}
                   >
                     <Download className="h-5 w-5" />
-                  </Button>
+                  </Button> */}
+
+                  <DownloadPanel
+                    onDownload={() => {
+                      const objectToCard: TrackCardStore = {
+                        title: track.title,
+                        artist: track.artist.name,
+                        coverUrl: track.album.cover_big,
+                      };
+                      setTrackToDonw(objectToCard);
+                     
+                      downloader.mutate(track.id.toString());
+                    }}
+                  />
                 </td>
               </tr>
             ))}

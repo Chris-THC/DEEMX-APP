@@ -53,11 +53,7 @@ const SidebarApp = () => {
           <User className="mr-2 h-4 w-4" />
           Artista
         </Button>
-        <Button variant="ghost" className="w-full justify-start">
-          <Library className="mr-2 h-4 w-4" />
-          Tu biblioteca
-        </Button>
-        <DownloadPanel />
+        <DownloadPanel textBtn="Descargas" />
         <Button
           variant="ghost"
           className="w-full justify-start"

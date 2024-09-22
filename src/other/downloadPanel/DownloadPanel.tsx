@@ -8,12 +8,18 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { TrackCardStore, storeTrack } from "@/store/track/TrackStore";
+import { Separator } from "@radix-ui/react-select";
 import { Download, DownloadIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 
 interface TrackProp {
   trackToDonw: TrackCardStore;
+}
+
+interface BtnProp {
+  textBtn?: string;
+  onDownload?: () => void;
 }
 
 const CradDownload: React.FC<TrackProp> = ({ trackToDonw }) => {
@@ -25,7 +31,6 @@ const CradDownload: React.FC<TrackProp> = ({ trackToDonw }) => {
 
     socket.on("download-progress", (data) => {
       setDownloadProgress(data.progress);
-      // console.info(data);
     });
     socket.on("download-success", (data) => {
       setIsSuccesDownload(data.success);
@@ -75,19 +80,24 @@ const CradDownload: React.FC<TrackProp> = ({ trackToDonw }) => {
   );
 };
 
-const DownloadPanel = () => {
+const DownloadPanel: React.FC<BtnProp> = ({ textBtn, onDownload }) => {
   const { trackToDonw } = storeTrack();
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" className="w-full justify-start">
+        <Button
+          onClick={onDownload}
+          variant="ghost"
+          className="w-full justify-start"
+        >
           <Download className="mr-2 h-4 w-4" />
-          Descargas
+          {textBtn}
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="bg-transparent border-none">
         <SheetHeader>
-          <SheetTitle>Descargas</SheetTitle>
+          <SheetTitle className="text-white">Descargas</SheetTitle>
+          <div className="border border-white"></div>
         </SheetHeader>
         <div className="grid gap-4 py-4">
           {!trackToDonw ? <></> : <CradDownload trackToDonw={trackToDonw} />}
