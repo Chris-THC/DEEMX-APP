@@ -51,7 +51,7 @@ const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
                     </div>
                     <div className="ml-4">
                       <div className="text-sm font-medium text-gray-900 max-w-[250px] overflow-hidden whitespace-nowrap overflow-ellipsis">
-                        {track.title}
+                        {track.title_short}
                       </div>
 
                       {track.explicit_lyrics ? (
@@ -73,30 +73,6 @@ const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
                   {SecondsToMinutes(track.duration)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  {/* <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-gray-400 hover:text-gray-500"
-                    onClick={() => {
-                      const objectToCard: TrackCardStore = {
-                        title: track.title,
-                        artist: track.artist.name,
-                        coverUrl: track.album.cover_big,
-                      };
-                      setTrackToDonw(objectToCard);
-                      // Ejemplo de uso
-                      showDownloadToast(
-                        track.title,
-                        track.artist.name,
-                        track.album.cover_big
-                      );
-
-                      downloader.mutate(track.id.toString());
-                    }}
-                  >
-                    <Download className="h-5 w-5" />
-                  </Button> */}
-
                   <DownloadPanel
                     onDownload={() => {
                       const objectToCard: TrackCardStore = {
@@ -105,7 +81,7 @@ const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
                         coverUrl: track.album.cover_big,
                       };
                       setTrackToDonw(objectToCard);
-                     
+
                       downloader.mutate(track.id.toString());
                     }}
                   />

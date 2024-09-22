@@ -20,7 +20,7 @@ const Top10TracksByArtist: React.FC<TrackProp> = ({ trackList }) => {
             <tr className="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
               <th className="px-6 py-3">Track</th>
               <th className="px-6 py-3">Album</th>
-              <th className="px-6 py-3">Duration</th>
+              <th className="px-6 py-3">Duración</th>
               <th className="px-6 py-3"></th>
             </tr>
           </thead>
@@ -44,7 +44,7 @@ const Top10TracksByArtist: React.FC<TrackProp> = ({ trackList }) => {
                     </div>
                     <div className="ml-4">
                       <div className="text-sm font-medium text-gray-900">
-                        {track.title}
+                        {track.title_short}
                       </div>
                       {track.explicit_lyrics ? (
                         <span className="inline-block bg-gray-200 rounded px-1 py-0.5 text-xs font-semibold text-gray-700 mr-2">

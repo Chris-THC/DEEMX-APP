@@ -1,5 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { AlbumsByS } from "@/interfaces/search/Search";
+import { storeAlbum } from "@/store/album/AlbumStore";
+import { useRouter } from "next/router";
 import React from "react";
 
 interface AlbumProps {
@@ -7,6 +9,13 @@ interface AlbumProps {
 }
 
 const AlbumsBySearch: React.FC<AlbumProps> = ({ albumList }) => {
+  const router = useRouter();
+  const { setIdAlbum } = storeAlbum();
+
+  const handleNavigationArtist = (route: string, idAlbum: number) => {
+    setIdAlbum(idAlbum);
+    router.push(route);
+  };
   return (
     <div className="container mx-auto">
       <div className="flex justify-between items-center mb-6">
@@ -23,7 +32,15 @@ const AlbumsBySearch: React.FC<AlbumProps> = ({ albumList }) => {
               className="w-full h-auto"
             />
             <CardContent className="p-2">
-              <h2 className="text-sm font-semibold truncate">{album.title}</h2>
+              <h2
+                onClick={() => {
+                  handleNavigationArtist("/album", album.id);
+                  // console.log(album.id);
+                }}
+                className="text-sm font-semibold truncate cursor-pointer"
+              >
+                {album.title}
+              </h2>
               <p className="text-xs text-gray-500 mt-1">{album.artist.name}</p>
               {album.explicit_lyrics && (
                 <span className="inline-block bg-gray-200 rounded px-1 py-0.5 text-[10px] font-semibold text-gray-700 mt-1">

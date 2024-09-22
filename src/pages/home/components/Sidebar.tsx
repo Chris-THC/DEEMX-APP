@@ -45,14 +45,14 @@ const SidebarApp = () => {
           <Search className="mr-2 h-4 w-4" />
           Buscar
         </Button>
-        <Button
+        {/* <Button
           onClick={() => handleNavigation("/artist")}
           variant="ghost"
           className="w-full justify-start"
         >
           <User className="mr-2 h-4 w-4" />
           Artista
-        </Button>
+        </Button> */}
         <DownloadPanel textBtn="Descargas" />
         <Button
           variant="ghost"
