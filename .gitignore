@@ -12,6 +12,9 @@
 # next.js
 /.next/
 /out/
+# ignora la carpeta de settings de la app
+/data/
+
 
 # production
 /build
