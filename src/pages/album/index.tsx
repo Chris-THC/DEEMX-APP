@@ -11,14 +11,18 @@ const Album = () => {
   if (isLoading) return <IsLoadingComponent />;
 
   return (
-    <div className="bg-background text-foreground p-6 max-w-4xl mx-auto">
+    <div className="bg-[#f3f4f6] text-foreground">
       {!albumData ? (
-        <div className="bg-background text-foreground p-6 max-w-4xl mx-auto"></div>
+        <div className="bg-[#f3f4f6] text-foreground p-6 max-w-4xl mx-auto"></div>
       ) : (
-        <div>
-          <HeaderInfo album={albumData} />
-          <TracksList trackList={albumData} />
-        </div>
+        <>
+          <div className="p-6 max-w-4xl mx-auto">
+            <HeaderInfo album={albumData} />
+          </div>
+          <div className="mx-32">
+            <TracksList trackList={albumData} />
+          </div>
+        </>
       )}
     </div>
   );

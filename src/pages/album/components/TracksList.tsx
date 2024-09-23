@@ -16,14 +16,13 @@ const TracksList: React.FC<TrackProp> = ({ trackList }) => {
   const { setTrackToDonw } = storeTrack();
 
   return (
-    <div className="container mx-auto p-4 bg-white">
+    <div className="w-full p-4 bg-[#f3f4f6]">
       {!trackList ? (
         <></>
       ) : (
         <>
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-semibold mb-4">Lista de canciones</h2>
-            {/* <Button variant="outline">View all</Button> */}
           </div>
           <div>
             <table className="w-full">
@@ -57,7 +56,7 @@ const TracksList: React.FC<TrackProp> = ({ trackList }) => {
                             </div>
                           </div>
                           <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900 max-w-[250px] overflow-hidden whitespace-nowrap overflow-ellipsis">
+                            <div className="text-sm font-medium text-gray-900 max-w-[350px] overflow-hidden whitespace-nowrap overflow-ellipsis">
                               {track.title}
                             </div>
 

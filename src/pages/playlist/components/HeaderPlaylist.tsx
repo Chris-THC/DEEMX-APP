@@ -1,7 +1,7 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, MoreHorizontal, Play } from "lucide-react";
 import { PlaylistFull } from "@/interfaces/playlist/playlist";
+import { Heart, MoreHorizontal, Play } from "lucide-react";
+import React from "react";
 
 interface HeaderInfo {
   playlist: PlaylistFull;
@@ -28,7 +28,7 @@ const HeaderPlaylist: React.FC<HeaderInfo> = ({ playlist }) => {
           {playlist.title}
         </h1>
         <p className="text-gray-600 mb-4">
-          {` Creada by ${playlist.creator.name} • ${playlist.nb_tracks} canciones, ${playlist.duration} min`}
+          {` Creada by ${playlist.creator.name} • ${playlist.nb_tracks} canciones`}
         </p>
         <div className="flex items-center gap-4">
           <Button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-8 py-2">
