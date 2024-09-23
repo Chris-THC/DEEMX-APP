@@ -56,7 +56,7 @@ const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
 
                       {track.explicit_lyrics ? (
                         <span className="inline-block bg-gray-200 rounded px-1 py-0.5 text-xs font-semibold text-gray-700 mr-2">
-                          E
+                          EXPLICIT
                         </span>
                       ) : (
                         <></>

@@ -42,7 +42,7 @@ const CradDownload: React.FC<TrackProp> = ({ trackToDonw }) => {
   }, []);
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-3 w-full max-w-xs flex items-center space-x-3">
+    <div className="bg-[#f3f4f6] rounded-lg shadow-md p-3 w-full max-w-xs flex items-center space-x-3">
       <img
         src={trackToDonw?.coverUrl}
         alt="Carátula del álbum"
