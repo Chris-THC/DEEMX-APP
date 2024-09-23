@@ -90,8 +90,16 @@ const DownloadPanel: React.FC<BtnProp> = ({ textBtn, onDownload }) => {
           variant="ghost"
           className="w-full justify-start"
         >
-          <Download className="mr-2 h-4 w-4" />
-          {textBtn}
+          {!textBtn ? (
+            <>
+              <Download className="mr-2 h-4 w-4" />
+            </>
+          ) : (
+            <>
+              <Download className="mr-2 h-4 w-4" />
+              {textBtn}
+            </>
+          )}
         </Button>
       </SheetTrigger>
       <SheetContent className="bg-transparent border-none">

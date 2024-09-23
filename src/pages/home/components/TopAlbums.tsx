@@ -7,8 +7,11 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { TopAlbum } from "@/interfaces/topAlbums/TopAlbums";
+import { storeAlbum } from "@/store/album/AlbumStore";
+import { storeArtistInfo } from "@/store/artist/ArtistStore";
 import Autoplay from "embla-carousel-autoplay";
 import { Heart, MoreHorizontal, Play } from "lucide-react";
+import { useRouter } from "next/router";
 import React from "react";
 
 interface AlbumCardProps {
@@ -20,6 +23,20 @@ interface AlbumList {
 }
 
 const AlbumCard: React.FC<AlbumCardProps> = ({ album }) => {
+  const { setIdArtist } = storeArtistInfo();
+  const { setIdAlbum } = storeAlbum();
+  const router = useRouter();
+
+  const handleNavigationArtist = (route: string, idArtist: number) => {
+    setIdArtist(idArtist);
+    router.push(route);
+  };
+
+  const handleNavigationAlbum = (route: string, idAlbum: number) => {
+    setIdAlbum(idAlbum);
+    router.push(route);
+  };
+
   return (
     <Card className="w-[320px] bg-gradient-to-b from-blue-400 to-blue-600 text-white min-w-[240px] md:min-w-[250px] rounded-lg overflow-hidden shadow-lg mx-3 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
       <CardContent className="p-0">
@@ -33,6 +50,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ album }) => {
           />
           <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100 h-[263px]">
             <Button
+              onClick={() => handleNavigationAlbum("/album", album.id)}
               size="icon"
               variant="secondary"
               className="rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-transform duration-300 transform scale-0 group-hover:scale-100"
@@ -45,13 +63,19 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ album }) => {
           <h2 className="font-bold text-lg truncate">{album.title}</h2>
           <div className="flex items-center mt-2">
             <img
+              onClick={() => handleNavigationArtist("/artist", album.artist.id)}
               src={album.artist.picture_medium}
               alt={album.artist.name}
               width={24}
               height={24}
-              className="rounded-full mr-2 border-2 border-white"
+              className="rounded-full mr-2 border-2 border-white cursor-pointer"
             />
-            <span className="text-sm truncate">{album.artist.name}</span>
+            <span
+              onClick={() => handleNavigationArtist("/artist", album.artist.id)}
+              className="text-sm truncate cursor-pointer"
+            >
+              {album.artist.name}
+            </span>
           </div>
         </div>
       </CardContent>

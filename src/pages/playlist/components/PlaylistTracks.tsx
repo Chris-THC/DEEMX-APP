@@ -2,8 +2,11 @@ import { useDownloadTrack } from "@/hooks/downloader/Downloader";
 import { PlaylistFull } from "@/interfaces/playlist/playlist";
 import { SecondsToMinutes } from "@/other/SecToMin/SecToMin";
 import DownloadPanel from "@/other/downloadPanel/DownloadPanel";
+import { storeAlbum } from "@/store/album/AlbumStore";
+import { storeArtistInfo } from "@/store/artist/ArtistStore";
 import { TrackCardStore, storeTrack } from "@/store/track/TrackStore";
 import { Play } from "lucide-react";
+import { useRouter } from "next/router";
 import React from "react";
 
 interface TrackProp {
@@ -13,6 +16,20 @@ interface TrackProp {
 const PlaylistTracks: React.FC<TrackProp> = ({ trackList }) => {
   const downloader = useDownloadTrack();
   const { setTrackToDonw } = storeTrack();
+
+  const { setIdArtist } = storeArtistInfo();
+  const { setIdAlbum } = storeAlbum();
+  const router = useRouter();
+
+  const handleNavigationArtist = (route: string, idArtist: number) => {
+    setIdArtist(idArtist);
+    router.push(route);
+  };
+
+  const handleNavigationAlbum = (route: string, idAlbum: number) => {
+    setIdAlbum(idAlbum);
+    router.push(route);
+  };
 
   return (
     <div className="container mx-auto p-4 bg-[#f3f4f6]">
@@ -70,12 +87,22 @@ const PlaylistTracks: React.FC<TrackProp> = ({ trackList }) => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div
+                          onClick={() =>
+                            handleNavigationArtist("/artist", track.artist.id)
+                          }
+                          className="text-sm text-gray-900 max-w-[250px] overflow-hidden whitespace-nowrap overflow-ellipsis cursor-pointer"
+                        >
                           {track.artist.name}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                      <td className="px-6 py-4 max-w-[250px] overflow-hidden whitespace-nowrap overflow-ellipsis">
+                        <div
+                          onClick={() =>
+                            handleNavigationAlbum("/album", track.album.id)
+                          }
+                          className="text-sm text-gray-900 cursor-pointer"
+                        >
                           {track.album.title}
                         </div>
                       </td>

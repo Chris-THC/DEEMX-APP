@@ -28,7 +28,7 @@ const HeaderPlaylist: React.FC<HeaderInfo> = ({ playlist }) => {
           {playlist.title}
         </h1>
         <p className="text-gray-600 mb-4">
-          {` Creada by ${playlist.creator.name} • ${playlist.nb_tracks} canciones`}
+          {` Creado by ${playlist.creator.name} • ${playlist.nb_tracks} canciones`}
         </p>
         <div className="flex items-center gap-4">
           <Button className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-8 py-2">

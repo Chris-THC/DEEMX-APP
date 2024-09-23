@@ -11,7 +11,7 @@ const Album = () => {
   if (isLoading) return <IsLoadingComponent />;
 
   return (
-    <div className="bg-[#f3f4f6] text-foreground">
+    <div className="bg-[#f3f4f6] text-foreground min-h-full">
       {!albumData ? (
         <div className="bg-[#f3f4f6] text-foreground p-6 max-w-4xl mx-auto"></div>
       ) : (

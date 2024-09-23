@@ -1,10 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { useDownloadTrack } from "@/hooks/downloader/Downloader";
 import { AlbumFull } from "@/interfaces/album/Album";
 import { SecondsToMinutes } from "@/other/SecToMin/SecToMin";
 import DownloadPanel from "@/other/downloadPanel/DownloadPanel";
 import { TrackCardStore, storeTrack } from "@/store/track/TrackStore";
-import { Heart, MoreHorizontal, Play } from "lucide-react";
+import { Play } from "lucide-react";
 import React from "react";
 
 interface TrackProp {

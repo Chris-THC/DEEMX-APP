@@ -1,7 +1,6 @@
 import { usePlaylist } from "@/hooks/playlist/UsePlayList";
+import IsLoadingComponent from "@/other/isLoading/IsloadingComponent";
 import { storePlaylist } from "@/store/playlist/PlaylistStore";
-import React from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import HeaderPlaylist from "./components/HeaderPlaylist";
 import PlaylistTracks from "./components/PlaylistTracks";
 
@@ -10,7 +9,7 @@ const PlaylistScreen = () => {
   const { data: playListArr, isLoading } = usePlaylist(idPlaylist);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <IsLoadingComponent />;
   }
 
   return (

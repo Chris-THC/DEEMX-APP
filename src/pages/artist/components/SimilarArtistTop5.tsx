@@ -21,7 +21,7 @@ const SimilarArtistTop5: React.FC<SimilarProps> = ({ artistsList }) => {
     <div className="w-full max-w-md mx-auto p-4 bg-background">
       <h2 className="text-2xl font-semibold mb-4">Artistas Similares</h2>
       <ul className="space-y-4">
-        {artistsList.data.slice(0, 5).map((artist, index) => (
+        {artistsList.data.slice(0, 8).map((artist, index) => (
           <li key={index} className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <img

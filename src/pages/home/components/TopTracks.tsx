@@ -1,8 +1,14 @@
 import { Button } from "@/components/ui/button";
+import { useDownloadTrack } from "@/hooks/downloader/Downloader";
 import { SecondsToMinutes } from "@/other/SecToMin/SecToMin";
+import DownloadPanel from "@/other/downloadPanel/DownloadPanel";
+import { storeAlbum } from "@/store/album/AlbumStore";
+import { storeArtistInfo } from "@/store/artist/ArtistStore";
+import { TrackCardStore, storeTrack } from "@/store/track/TrackStore";
 import { Play } from "lucide-react";
 
 import { Heart, MoreHorizontal } from "lucide-react";
+import { useRouter } from "next/router";
 import React from "react";
 
 interface TrackProp {
@@ -10,7 +16,22 @@ interface TrackProp {
 }
 
 const TopTracks: React.FC<TrackProp> = ({ trackList }) => {
-  
+  const downloader = useDownloadTrack();
+  const { setTrackToDonw } = storeTrack();
+  const { setIdArtist } = storeArtistInfo();
+  const { setIdAlbum } = storeAlbum();
+  const router = useRouter();
+
+  const handleNavigationArtist = (route: string, idArtist: number) => {
+    setIdArtist(idArtist);
+    router.push(route);
+  };
+
+  const handleNavigationAlbum = (route: string, idAlbum: number) => {
+    setIdAlbum(idAlbum);
+    router.push(route);
+  };
+
   return (
     <div className="container mx-auto p-4 bg-white">
       <div className="flex justify-between items-center mb-4">
@@ -61,12 +82,22 @@ const TopTracks: React.FC<TrackProp> = ({ trackList }) => {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
+                  <div
+                    onClick={() => {
+                      handleNavigationArtist("/artist", track.artist.id);
+                    }}
+                    className="text-sm text-gray-900 cursor-pointer"
+                  >
                     {track.artist.name}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
+                  <div
+                    onClick={() => {
+                      handleNavigationAlbum("/album", track.album.id);
+                    }}
+                    className="text-sm text-gray-900 cursor-pointer"
+                  >
                     {track.album.title}
                   </div>
                 </td>
@@ -74,20 +105,18 @@ const TopTracks: React.FC<TrackProp> = ({ trackList }) => {
                   {SecondsToMinutes(track.duration)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-gray-400 hover:text-gray-500"
-                  >
-                    <Heart className="h-5 w-5" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-gray-400 hover:text-gray-500"
-                  >
-                    <MoreHorizontal className="h-5 w-5" />
-                  </Button>
+                  <DownloadPanel
+                    onDownload={() => {
+                      const objectToCard: TrackCardStore = {
+                        title: track.title,
+                        artist: track.artist.name,
+                        coverUrl: track.album.cover_big,
+                      };
+                      setTrackToDonw(objectToCard);
+
+                      downloader.mutate(track.id.toString());
+                    }}
+                  />
                 </td>
               </tr>
             ))}

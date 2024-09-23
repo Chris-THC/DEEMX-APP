@@ -57,7 +57,7 @@ export default function ArtistPage() {
 
         <div className="mt-8">
           <div className="grid grid-cols-3 gap-5">
-            <Card className="col-span-2">
+            <Card className="col-span-2 row-span-3">
               <Top10TracksByArtist trackList={artistInf?.top10!} />
             </Card>
             <Card>

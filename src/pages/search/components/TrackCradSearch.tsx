@@ -50,7 +50,7 @@ const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
                       </div>
                     </div>
                     <div className="ml-4">
-                      <div className="text-sm font-medium text-gray-900 max-w-[250px] overflow-hidden whitespace-nowrap overflow-ellipsis">
+                      <div className="text-sm font-medium text-gray-900 max-w-[150px] overflow-hidden whitespace-nowrap overflow-ellipsis">
                         {track.title_short}
                       </div>
 
@@ -64,7 +64,7 @@ const TrackCardSearch: React.FC<TrackProp> = ({ trackList }) => {
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-6 py-4 max-w-[250px] overflow-hidden whitespace-nowrap overflow-ellipsis">
                   <div className="text-sm text-gray-900">
                     {track.artist.name}
                   </div>

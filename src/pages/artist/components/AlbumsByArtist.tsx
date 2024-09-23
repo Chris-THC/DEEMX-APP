@@ -1,6 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Albums } from "@/interfaces/artist/Artist";
 import { formatDate } from "@/other/formartDate/FormartDate";
+import { storeAlbum } from "@/store/album/AlbumStore";
+import { useRouter } from "next/router";
 import React from "react";
 
 interface AlbumProps {
@@ -8,6 +10,13 @@ interface AlbumProps {
 }
 
 const AlbumsByArtist: React.FC<AlbumProps> = ({ albumList }) => {
+  const { setIdAlbum } = storeAlbum();
+  const router = useRouter();
+
+  const handleNavigationAlbum = (route: string, idAlbum: number) => {
+    setIdAlbum(idAlbum);
+    router.push(route);
+  };
   return (
     <div className="container mx-auto">
       <div className="flex justify-between items-center mb-6">
@@ -15,7 +24,11 @@ const AlbumsByArtist: React.FC<AlbumProps> = ({ albumList }) => {
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {albumList.data.slice(0, 18).map((album, index) => (
-          <Card key={index} className="overflow-hidden">
+          <Card
+            key={index}
+            onClick={() => handleNavigationAlbum(`/album`, album.id)}
+            className="overflow-hidden cursor-pointer"
+          >
             <img
               src={album.cover_big}
               alt={`${album.title} cover`}
