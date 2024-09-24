@@ -3,6 +3,7 @@ import { useTopArtists } from "@/hooks/Topartist/UseTopArtist";
 import { UseMusicGenres } from "@/hooks/musicGenre/UseMusicGenres";
 import { UseTopAlbums } from "@/hooks/topAlbums/UseTopAlbums";
 import { UseTopTracks } from "@/hooks/topTracks/UseTopTracks";
+import IsLoadingComponent from "@/other/isLoading/IsloadingComponent";
 import Releases from "./components/Releases";
 import TopAlbums from "./components/TopAlbums";
 import TopArtist from "./components/TopArtist";
@@ -15,7 +16,7 @@ export default function HomeScreen() {
   const { data: topAlbums } = UseTopAlbums();
 
   if (isLoading) {
-    return <div>Cargando...</div>;
+    return <IsLoadingComponent />;
   }
 
   return (
@@ -40,9 +41,9 @@ export default function HomeScreen() {
         )}
       </div>
 
-      <div className="ml-8">
+      {/* <div className="ml-8">
         <Releases genre={musicgenres!} />
-      </div>
+      </div> */}
     </div>
   );
 }

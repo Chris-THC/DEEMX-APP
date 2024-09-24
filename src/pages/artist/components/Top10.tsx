@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { useDownloadTrack } from "@/hooks/downloader/Downloader";
 import { Top10 } from "@/interfaces/artist/Artist";
+import { TrackStorePlayer } from "@/interfaces/player/TrackPlay";
 import { SecondsToMinutes } from "@/other/SecToMin/SecToMin";
 import DownloadPanel from "@/other/downloadPanel/DownloadPanel";
 import { storeAlbum } from "@/store/album/AlbumStore";
-import { storeArtistInfo } from "@/store/artist/ArtistStore";
+import { storeTrackPlayer } from "@/store/audioPlayer/AudioPlayerStore";
 import { TrackCardStore, storeTrack } from "@/store/track/TrackStore";
-import { MoreHorizontal, Play } from "lucide-react";
+import { Play } from "lucide-react";
 import { useRouter } from "next/router";
 
 interface TrackProp {
@@ -18,6 +19,7 @@ const Top10TracksByArtist: React.FC<TrackProp> = ({ trackList }) => {
   const router = useRouter();
   const downloader = useDownloadTrack();
   const { setTrackToDonw } = storeTrack();
+  const { setTrackStreaming } = storeTrackPlayer();
 
   const handleNavigationAlbum = (route: string, idAlbum: number) => {
     setIdAlbum(idAlbum);
@@ -54,7 +56,19 @@ const Top10TracksByArtist: React.FC<TrackProp> = ({ trackList }) => {
                         src={track.album.cover_big}
                         alt={`${track.id}`}
                       />
-                      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity">
+                      <div
+                        onClick={() => {
+                          const trackPlay: TrackStorePlayer = {
+                            id: track.id,
+                            title: track.title_short,
+                            artist: track.artist.name,
+                            cover: track.album.cover_big,
+                            preview: track.preview,
+                          };
+                          setTrackStreaming(trackPlay);
+                        }}
+                        className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity"
+                      >
                         <Play className="h-5 w-5 text-white" />
                       </div>
                     </div>
