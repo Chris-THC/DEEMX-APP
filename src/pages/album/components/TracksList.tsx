@@ -1,7 +1,9 @@
 import { useDownloadTrack } from "@/hooks/downloader/Downloader";
 import { AlbumFull } from "@/interfaces/album/Album";
+import { TrackStorePlayer } from "@/interfaces/player/TrackPlay";
 import { SecondsToMinutes } from "@/other/SecToMin/SecToMin";
 import DownloadPanel from "@/other/downloadPanel/DownloadPanel";
+import { storeTrackPlayer } from "@/store/audioPlayer/AudioPlayerStore";
 import { TrackCardStore, storeTrack } from "@/store/track/TrackStore";
 import { Play } from "lucide-react";
 import React from "react";
@@ -13,6 +15,7 @@ interface TrackProp {
 const TracksList: React.FC<TrackProp> = ({ trackList }) => {
   const downloader = useDownloadTrack();
   const { setTrackToDonw } = storeTrack();
+  const { setTrackStreaming } = storeTrackPlayer();
 
   return (
     <div className="w-full p-4 bg-[#f3f4f6]">
@@ -44,7 +47,19 @@ const TracksList: React.FC<TrackProp> = ({ trackList }) => {
                       <td className="px-6 py-4 whitespace-nowrap">{idx + 1}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <div className="flex-shrink-0 h-10 w-10 relative">
+                          <div
+                            onClick={() => {
+                              const trackPlay: TrackStorePlayer = {
+                                id: track.id,
+                                title: track.title_short,
+                                artist: track.artist.name,
+                                cover: track.album.cover_big,
+                                preview: track.preview,
+                              };
+                              setTrackStreaming(trackPlay);
+                            }}
+                            className="flex-shrink-0 h-10 w-10 relative"
+                          >
                             <img
                               className="h-15 w-15 rounded"
                               src={track.album.cover_big}
