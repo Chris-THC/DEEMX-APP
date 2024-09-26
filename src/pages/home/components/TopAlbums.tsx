@@ -37,6 +37,8 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ album }) => {
     router.push(route);
   };
 
+  if (!album) return <></>;
+
   return (
     <Card className="w-[320px] bg-gradient-to-b from-blue-400 to-blue-600 text-white min-w-[240px] md:min-w-[250px] rounded-lg overflow-hidden shadow-lg mx-3 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
       <CardContent className="p-0">
@@ -103,6 +105,8 @@ const TopAlbums: React.FC<AlbumList> = ({ topAlbums }) => {
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true })
   );
+
+  if (!topAlbums) return <></>;
 
   return (
     <section className="pb-8 mx-4">

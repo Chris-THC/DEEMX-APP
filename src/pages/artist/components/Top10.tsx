@@ -26,6 +26,8 @@ const Top10TracksByArtist: React.FC<TrackProp> = ({ trackList }) => {
     router.push(route);
   };
 
+  if (!trackList) return <></>;
+
   return (
     <div className="container mx-auto p-4 bg-white">
       <div className="flex justify-between items-center mb-4">

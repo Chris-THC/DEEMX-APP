@@ -17,6 +17,8 @@ const SimilarArtistCard: React.FC<SimilarProps> = ({ artistsList }) => {
     router.push(route);
   };
 
+  if (!artistsList) return <></>;
+
   return (
     <div className="w-full max-w-md mx-auto p-4 bg-background">
       <h2 className="text-2xl font-semibold mb-4">Artistas Similares</h2>

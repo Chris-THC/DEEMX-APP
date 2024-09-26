@@ -18,6 +18,8 @@ export default function ArtistPage() {
     return <IsLoadingComponent />;
   }
 
+  if (!artistInf) return <></>;
+
   return (
     <div className="flex flex-col items-center min-h-screen bg-white text-gray-800 m-4">
       <div className="w-full max-w-6xl">

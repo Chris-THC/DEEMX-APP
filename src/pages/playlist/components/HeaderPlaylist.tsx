@@ -8,6 +8,9 @@ interface HeaderInfo {
 }
 
 const HeaderPlaylist: React.FC<HeaderInfo> = ({ playlist }) => {
+  
+  if (!playlist) return <></>;
+
   return (
     <div className="flex flex-col md:flex-row p-6 gap-6">
       <div className="flex-shrink-0">
