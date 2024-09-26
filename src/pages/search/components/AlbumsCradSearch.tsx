@@ -24,6 +24,8 @@ const AlbumsBySearch: React.FC<AlbumProps> = ({ albumList }) => {
     router.push(route);
   };
 
+  if (!albumList) return <></>;
+
   return (
     <div className="container mx-auto">
       <div className="flex justify-between items-center mb-6">

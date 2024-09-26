@@ -18,6 +18,8 @@ const HeaderInfo: React.FC<HeaderProp> = ({ album }) => {
     router.push(route);
   };
 
+  if (!album) return <></>;
+
   return (
     <div className="flex flex-col md:flex-row gap-6">
       <img
