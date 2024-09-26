@@ -19,7 +19,8 @@ const createWindow = () => {
   // Quita el menú por defecto
   Menu.setApplicationMenu(null);
 
-  mainWindow.loadURL("http://localhost:3000");
+  mainWindow.loadURL("app://./");
+  // mainWindow.loadURL("http://localhost:3000");
 };
 
 app.on("ready", async () => {

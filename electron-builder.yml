@@ -1,12 +1,28 @@
 appId: "io.github.rbfraphael.electron-next"
 productName: "Electron Next.JS"
 copyright: "Copyright (c) 2023 RBFraphael"
+
+# Configuración para Windows
 win:
   target: ["dir", "portable", "zip"]
   icon: "resources/icon.ico"
+
+# Configuración para Linux
 linux:
   target: ["dir", "appimage", "zip"]
   icon: "resources/icon.png"
+
+# Configuración para macOS
 mac:
   target: ["dir", "dmg", "zip"]
   icon: "resources/icon.icns"
+
+# Archivos a incluir en el build
+files:
+  - "main/**/*"        # Incluye todos los archivos dentro de la carpeta 'main'
+  - "server.js"        # Incluye tu servidor Express
+  - "out/**/*"         # Incluye los archivos estáticos exportados por Next.js
+  - "package.json"     # Incluye el package.json para las dependencias y scripts de la app
+
+# Excluir archivos no necesarios
+asar: true  # Empaqueta los archivos en un solo archivo ASAR para optimizar el tamaño
