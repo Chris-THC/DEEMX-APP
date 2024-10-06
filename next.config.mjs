@@ -8,7 +8,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   // Nueva configuración para exportación estática
-  output: 'standalone',
+  // output: 'standalone',
 };
 
 export default nextConfig;
